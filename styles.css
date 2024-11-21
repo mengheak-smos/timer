@@ -25,7 +25,7 @@ body {
 
 
 .timer .time {
-  font-size: 200px; /* Increased size */
+  font-size: 250px; /* Increased size */
   font-weight: bold;
   color: red; /* Red color for the timer */
   padding: 20px;
