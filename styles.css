@@ -14,7 +14,7 @@ body {
 }
 
 .image img {
-  width: 200px; /* Larger logo */
+  width: 350px; /* Larger logo */
   height: auto; /* Maintain aspect ratio */
 }
 
@@ -91,6 +91,6 @@ button:disabled {
 
 /* Image Logo Styling */
 .image img {
-  max-width: 300px; /* Limit logo size */
+  max-width: 350px; /* Limit logo size */
   margin-bottom: 30px; /* Space between logo and timer */
 }
