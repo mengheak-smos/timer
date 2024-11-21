@@ -91,6 +91,6 @@ button:disabled {
 
 /* Image Logo Styling */
 .image img {
-  max-width: 120px; /* Limit logo size */
+  max-width: 300px; /* Limit logo size */
   margin-bottom: 30px; /* Space between logo and timer */
 }
