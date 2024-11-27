@@ -1,66 +1,58 @@
-const timeDisplay = document.getElementById('time');
+// Parse the minutes from the query string
+const urlParams = new URLSearchParams(window.location.search);
+const minutes = parseInt(urlParams.get('minutes'), 10) || 0;
+
+let timer;
+let timeRemaining = minutes * 60;
+let isRunning = false;
+
+// DOM Elements
+const timeElement = document.getElementById('time');
 const startBtn = document.getElementById('startBtn');
 const stopBtn = document.getElementById('stopBtn');
 const resetBtn = document.getElementById('resetBtn');
 
-const initialTime = 10; // 10 seconds
-let time = initialTime;
-let countdownInterval;
-let isRunning = false;
+// Update the timer display
+function updateDisplay() {
+  const mins = Math.floor(timeRemaining / 60);
+  const secs = timeRemaining % 60;
+  timeElement.textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
+}
 
-function updateCountdown() {
-    const minutes = Math.floor(time / 60);
-    let seconds = time % 60;
-    seconds = seconds < 10 ? '0' + seconds : seconds;
+// Start the timer
+startBtn.addEventListener('click', () => {
+  if (isRunning) return;
+  isRunning = true;
+  stopBtn.disabled = false;
+  resetBtn.disabled = false;
 
-    timeDisplay.innerHTML = `${minutes}:${seconds}`;
-    if (time > 0) {
-        time--;
+  timer = setInterval(() => {
+    if (timeRemaining > 0) {
+      timeRemaining--;
+      updateDisplay();
     } else {
-        clearInterval(countdownInterval);
-        timeDisplay.innerHTML = '时间到!';
-        startBtn.disabled = true;
-        stopBtn.disabled = true;
-        resetBtn.disabled = false;
-
-        // Optional: Audio alert
-        const audio = new Audio('path/to/alert.mp3');
-        audio.play();
+      clearInterval(timer);
+      isRunning = false;
+      alert('倒计时结束！');
     }
-}
+  }, 1000);
+});
 
-function startTimer() {
-    if (!isRunning) {
-        countdownInterval = setInterval(updateCountdown, 1000);
-        isRunning = true;
-        startBtn.disabled = true;
-        stopBtn.disabled = false;
-        resetBtn.disabled = false;
-    }
-}
+// Stop the timer
+stopBtn.addEventListener('click', () => {
+  clearInterval(timer);
+  isRunning = false;
+});
 
-function stopTimer() {
-    clearInterval(countdownInterval);
-    isRunning = false;
-    startBtn.disabled = false;
-    stopBtn.disabled = true;
-}
+// Reset the timer
+resetBtn.addEventListener('click', () => {
+  clearInterval(timer);
+  isRunning = false;
+  timeRemaining = minutes * 60;
+  updateDisplay();
+  stopBtn.disabled = true;
+  resetBtn.disabled = true;
+});
 
-function resetTimer() {
-    clearInterval(countdownInterval);
-    time = initialTime;
-    isRunning = false;
-    timeDisplay.innerHTML = '0:10';
-    startBtn.disabled = false;
-    stopBtn.disabled = true;
-    resetBtn.disabled = true;
-}
-
-// Event listeners
-startBtn.addEventListener('click', startTimer);
-stopBtn.addEventListener('click', stopTimer);
-resetBtn.addEventListener('click', resetTimer);
-
-// Initialize button states
-stopBtn.disabled = true;
-resetBtn.disabled = true;
+// Initialize the timer display
+updateDisplay();
