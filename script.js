@@ -1,9 +1,9 @@
-// Parse the seconds from the query string
+// Parse the minutes from the query string
 const urlParams = new URLSearchParams(window.location.search);
-const seconds = parseInt(urlParams.get('seconds'), 10) || 0;
+const minutes = parseInt(urlParams.get('minutes'), 10) || 0;
 
 let timer;
-let timeRemaining = seconds; // Initialize directly with the seconds value
+let timeRemaining = minutes * 60;
 let isRunning = false;
 
 // DOM Elements
@@ -48,7 +48,7 @@ stopBtn.addEventListener('click', () => {
 resetBtn.addEventListener('click', () => {
   clearInterval(timer);
   isRunning = false;
-  timeRemaining = seconds; // Reset to the original seconds value
+  timeRemaining = minutes * 60;
   updateDisplay();
   stopBtn.disabled = true;
   resetBtn.disabled = true;
