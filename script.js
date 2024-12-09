@@ -3,7 +3,7 @@ const urlParams = new URLSearchParams(window.location.search);
 const seconds = parseInt(urlParams.get('seconds'), 10) || 0;
 
 let timer;
-let timeRemaining = seconds; // Initialize with seconds directly
+let timeRemaining = seconds; // Initialize directly with the seconds value
 let isRunning = false;
 
 // DOM Elements
